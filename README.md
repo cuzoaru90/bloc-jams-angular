@@ -1,16 +1,18 @@
-## Bloc Frontend Project Starter
+## Bloc Jams using AngularJS
 
-A starter application for student projects in Bloc's [Frontend Web Development Course](https://www.bloc.io/frontend-development-bootcamp).
+This is a music player app that works with your personal music library.
+The Angular Bloc Jams app can be viewed at {https://intense-lake-3605.herokuapp.com}.
+The following information tells users how they can contribute to the app or just test out their own ideas.
 
 ## Configuration
 
 Start by cloning the repository:
 
 ```
-$ git clone https://github.com/Bloc/bloc-frontend-project-starter.git <your-frontend-project-name>
+$ git clone https://github.com/cuzoaru90/bloc-jams-angular.git
 ```
 
-The project uses Grunt to run tasks in development. Thoroughly review our [resource on using Grunt](https://www.bloc.io/resources/using-grunt) before using this application. It may also help to review [our resource on NPM and `package.json` files](https://www.bloc.io/resources/npm-and-package-json).
+The project uses Grunt to run tasks in development. Thoroughly review the [resource on using Grunt](https://www.bloc.io/resources/using-grunt) before using this application. It may also help to review [the resource on NPM and `package.json` files](https://www.bloc.io/resources/npm-and-package-json).
 
 Install the project dependencies by running:
 
@@ -69,7 +71,7 @@ All code, styles, markup, and assets should be saved to the `app` directory. Sav
 
 ### Assets/Images
 
-Add images to the `app/assets/images` directory. To reference images in HTML, use the path `/assets/images/<image file name>.jpg`. For example, to include the image called `bloc-white-logo.png`, the path for the `src` attribute in the HTML would be:
+ Extra assets can be included by dragging images to the `app/assets/images` directory. The same applies for mp3s. To reference images in HTML, use the path `/assets/images/<image file name>.jpg`. For example, to include the image called `bloc-white-logo.png`, the path for the `src` attribute in the HTML would be:
 
 ```html 
 <img src="/assets/images/bloc-white-logo.png">
