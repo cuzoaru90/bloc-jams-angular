@@ -25,14 +25,29 @@ var Hapi = require('hapi'),
         },
         spa: {
             method: 'GET',
-            path: '/{path*}',
+            path: '/',
             handler: {
-                file: path.join(__dirname, '/dist/index.html')
+                file: path.join(__dirname, '/dist/index.html'),    
+            }
+        },
+        collection: {
+            method: 'GET',
+            path: '/collection.html',
+            handler: {
+                file: path.join(__dirname, '/dist/collection.html'),    
+            }
+        },
+        album: {
+            method: 'GET',
+            path: '/album.html',
+            handler: {
+                file: path.join(__dirname, '/dist/album.html'),    
             }
         }
     };
 
-server.route([ routes.css, routes.js, routes.assets, routes.templates, routes.spa ]);
+server.route([ routes.css, routes.js, routes.assets, routes.templates, routes.spa, routes.collection, 
+      routes.album ]);
 server.start( onServerStarted );
 
 function onServerStarted() {
