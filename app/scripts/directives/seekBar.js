@@ -1,5 +1,5 @@
 (function() {
-  function seekBar() {
+  function seekBar($document) {
     
     /**
     * @function calculatePercent
@@ -55,6 +55,25 @@
         var percent = calculatePercent(seekBar, event);
         scope.value = percent * scope.max;
       };
+      
+      /**
+      * @function trackThumb
+      * @desc Continuously applies change to seek bar value when thumb is dragged
+      */
+      scope.trackThumb = function() {
+        $document.bind('mousemove.thumb', function(event) {
+          var percent = calculatePercent(seekBar, event);
+          scope.$apply(function() {
+            scope.value = percent * scope.max;
+          });
+        });
+ 
+        $document.bind('mouseup.thumb', function() {
+          $document.unbind('mousemove.thumb');
+          $document.unbind('mouseup.thumb');
+        });
+
+      }; // end of trackThumb method
 
       } // end of link method
     };
@@ -63,5 +82,5 @@
  
   angular
     .module('blocJams')
-    .directive('seekBar', seekBar);
+    .directive('seekBar', ['$document', seekBar]);
 })();
