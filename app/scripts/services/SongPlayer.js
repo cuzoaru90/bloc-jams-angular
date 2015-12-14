@@ -95,13 +95,33 @@
 
     /**
     * @function SongPlayer.previous (public method of the SongPlayer service)
-    * @desc Getarray index of the song preceding the currentSongs
+    * @desc Get array index of the song preceding the currentSong
     */
     SongPlayer.previous = function() {
       var currentSongIndex = getSongIndex(SongPlayer.currentSong);
       currentSongIndex--;
 
       if (currentSongIndex < 0) {
+        currentBuzzObject.stop();
+        SongPlayer.currentSong.playing = null;
+      } 
+      else {
+        var song = currentAlbum.songs[currentSongIndex];
+        setSong(song);
+        playSong(song);
+      }
+
+    };
+
+    /**
+    * @function SongPlayer.next (public method of the SongPlayer service)
+    * @desc Get array index of the song following the currentSong
+    */
+    SongPlayer.next = function() {
+      var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+      currentSongIndex++;
+
+      if (currentSongIndex >= currentAlbum.songs.length) {
         currentBuzzObject.stop();
         SongPlayer.currentSong.playing = null;
       } 
