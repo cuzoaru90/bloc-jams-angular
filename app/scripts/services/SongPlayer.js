@@ -23,7 +23,12 @@
 
     if (currentBuzzObject) {
       currentBuzzObject.stop();
-      SongPlayer.currentSong.playing = null;
+
+      if (SongPlayer.currentSong)
+      {
+        SongPlayer.currentSong.playing = null;
+      }
+      
     }
  
     currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -43,6 +48,7 @@
     var playSong = function(song) {
       currentBuzzObject.play();
       song.playing = true;
+      SongPlayer.currentAlbum = currentAlbum;
     };
 
     /**
@@ -53,6 +59,8 @@
     var stopSong = function(song) {
       currentBuzzObject.pause();
       song.playing = null;
+      SongPlayer.currentAlbum = null;
+      SongPlayer.currentSong = null;
     };
     
     /**
@@ -70,6 +78,12 @@
     * @type {Object}
     */
     SongPlayer.currentSong = null;
+
+    /**
+    * @desc Current album variable (public)
+    * @type {Object}
+    */
+    SongPlayer.currentAlbum = null;
     
     /**
     * @function SongPlayer.play (public method of the SongPlayer service)
