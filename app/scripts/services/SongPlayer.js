@@ -1,22 +1,15 @@
 (function() {
   function SongPlayer() {
     var SongPlayer = {};
-    
 
     /**
-    * @desc Current song variable
-    * @type {Object}
-    */
-    var currentSong = null;
-
-    /**
-    * @desc Buzz object audio file
+    * @desc Buzz object audio file (private)
     * @type {Object}
     */
     var currentBuzzObject = null;
 
     /**
-    * @function setSong
+    * @function setSong (private)
     * @desc Stops currently playing song and loads new audio file as currentBuzzObject
     * @param {Object} song
     */
@@ -24,7 +17,7 @@
 
     if (currentBuzzObject) {
       currentBuzzObject.stop();
-      currentSong.playing = null;
+      SongPlayer.currentSong.playing = null;
     }
  
     currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -32,12 +25,12 @@
       preload: true
     });
  
-      currentSong = song;
+      SongPlayer.currentSong = song;
     };
     
 
     /**
-    * @function playSong
+    * @function playSong (private)
     * @desc Plays the loaded currentBuzzObject
     * @param {Object} song
     */
@@ -45,6 +38,12 @@
       currentBuzzObject.play();
       song.playing = true;
     };
+
+    /**
+    * @desc Current song variable (public)
+    * @type {Object}
+    */
+    SongPlayer.currentSong = null;
     
     /**
     * @function SongPlayer.play (public method of the SongPlayer service)
@@ -52,13 +51,14 @@
     * @param {Object} song
     */
     SongPlayer.play = function(song) {
-      if (currentSong !== song) {
+      song = song || SongPlayer.currentSong;
+      if (SongPlayer.currentSong !== song) {
        
       setSong(song);
       playSong(song);
 
       }
-      else if (currentSong === song) {
+      else if (SongPlayer.currentSong === song) {
         if (currentBuzzObject.isPaused()) {
           currentBuzzObject.play();
         }
@@ -72,6 +72,7 @@
     * @param {Object} song
     */
     SongPlayer.pause = function(song) {
+      song = song || SongPlayer.currentSong;
       currentBuzzObject.pause();
       song.playing = false;
     };  
