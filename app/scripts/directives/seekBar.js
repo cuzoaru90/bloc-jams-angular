@@ -48,6 +48,14 @@
       };
       
       /**
+      * @function thumbStyle
+      * @desc Updates position of thumb
+      */
+      scope.thumbStyle = function() {
+        return {left: percentString()};
+      };
+
+      /**
       * @function onClickSeekBar
       * @desc Updates seek bar value based on bar width and location of click
       */
