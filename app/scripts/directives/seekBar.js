@@ -19,7 +19,7 @@
       templateUrl: '/templates/directives/seek_bar.html',
       replace: true,
       restrict: 'E',
-      scope: { },
+      scope: { onChange: '&' },
       //updates DOM
       link: function(scope, element, attributes) {
       // bulk of directive logic is placed here and is returned
@@ -27,6 +27,14 @@
       scope.max = 100;
 
       var seekBar = $(element);
+
+      attributes.$observe('value', function(newValue) {
+        scope.value = newValue;
+      });
+ 
+      attributes.$observe('max', function(newValue) {
+        scope.max = newValue;
+      });
       
       /**
       * @function percentString
@@ -62,6 +70,7 @@
       scope.onClickSeekBar = function(event) {
         var percent = calculatePercent(seekBar, event);
         scope.value = percent * scope.max;
+        notifyOnChange(scope.value);
       };
       
       /**
@@ -73,6 +82,7 @@
           var percent = calculatePercent(seekBar, event);
           scope.$apply(function() {
             scope.value = percent * scope.max;
+            notifyOnChange(scope.value);
           });
         });
  
@@ -82,6 +92,12 @@
         });
 
       }; // end of trackThumb method
+
+      var notifyOnChange = function(newValue) {
+        if (typeof scope.onChange === 'function') {
+          scope.onChange({value: newValue});
+        }
+      };
 
       } // end of link method
     };
