@@ -35,13 +35,24 @@
       formats: ['mp3'],
       preload: true
     });
+
+    currentBuzzObject.setVolume(SongPlayer.volume);
     
     /**
-    * @desc Buzz objects updates when the seek bar is dragged
+    * @desc Buzz object time updateswhen the seek bar is dragged
     */
     currentBuzzObject.bind('timeupdate', function() {
       $rootScope.$apply(function() {
         SongPlayer.currentTime = currentBuzzObject.getTime();
+      });
+    });
+
+    /**
+    * @desc Buzz object volume updates when the seek bar is dragged
+    */
+    currentBuzzObject.bind('volumechange', function() {
+      $rootScope.$apply(function() {
+        SongPlayer.volume = currentBuzzObject.getVolume();
       });
     });
  
@@ -90,16 +101,22 @@
     SongPlayer.currentSong = null;
 
     /**
+    * @desc Current album variable (public)
+    * @type {Object}
+    */
+    SongPlayer.currentAlbum = null;
+
+    /**
     * @desc Current playback time (in seconds) of currently playing song
     * @type {Number}
     */
     SongPlayer.currentTime = null;
 
     /**
-    * @desc Current album variable (public)
-    * @type {Object}
+    * @desc The volume of the song player
+    * @type {Number}
     */
-    SongPlayer.currentAlbum = null;
+    SongPlayer.volume = null;
     
     /**
     * @function SongPlayer.play (public method of the SongPlayer service)
@@ -108,11 +125,9 @@
     */
     SongPlayer.play = function(song) {
       song = song || SongPlayer.currentSong;
-      if (SongPlayer.currentSong !== song) {
-       
-      setSong(song);
-      playSong(song);
-
+      if (SongPlayer.currentSong !== song) { 
+        setSong(song);
+        playSong(song);
       }
       else if (SongPlayer.currentSong === song) {
         if (currentBuzzObject.isPaused()) {
@@ -130,6 +145,17 @@
     SongPlayer.setCurrentTime = function(time) {
       if (currentBuzzObject) {
         currentBuzzObject.setTime(time);
+      }
+    };
+
+     /**
+     * @function setVolume
+     * @desc Set volume of the song player
+     * @param {Number} volume
+     */
+    SongPlayer.setVolume = function(volume) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(volume)
       }
     };
 
