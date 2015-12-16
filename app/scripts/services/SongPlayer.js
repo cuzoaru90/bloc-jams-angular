@@ -79,6 +79,7 @@
     */
     var stopSong = function(song) {
       currentBuzzObject.pause();
+      currentBuzzObject.setTime(null);
       song.playing = null;
       SongPlayer.currentAlbum = null;
       SongPlayer.currentSong = null;
