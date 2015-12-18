@@ -37,7 +37,7 @@
       preload: true
     });
 
-    currentBuzzObject.setVolume(SongPlayer.volume);
+    currentBuzzObject.setVolume(50);
     
     /**
     * @desc Buzz object time updateswhen the seek bar is dragged
