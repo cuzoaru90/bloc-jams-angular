@@ -1,6 +1,7 @@
 (function() {
   function SongPlayer($rootScope, Fixtures) {
-    var SongPlayer = {};
+     
+     var SongPlayer = {};
 
     /**
     * @desc Current album object retrieved from fixtures
@@ -80,7 +81,7 @@
     var stopSong = function(song) {
       currentBuzzObject.pause();
       currentBuzzObject.setTime(null);
-      song.playing = null;
+      song.playing = false;
       SongPlayer.currentAlbum = null;
       SongPlayer.currentSong = null;
     };
@@ -133,6 +134,7 @@
       else if (SongPlayer.currentSong === song) {
         if (currentBuzzObject.isPaused()) {
           currentBuzzObject.play();
+          song.playing = true;
         }
       }         
 
@@ -170,6 +172,21 @@
       currentBuzzObject.pause(); // Pauses song, doesn't stop it
       song.playing = false;
     }; 
+    
+    /**
+    * @function SongPlayer.playOrPause (public method of the SongPlayer service)
+    * @desc Will either play or pause depending on whether the song is playing (helps with buttons)
+    * @param {Object} song
+    */
+    SongPlayer.playOrPause = function(song) {
+       
+       if (song.playing){
+         SongPlayer.pause(song);
+       }
+       else{
+         SongPlayer.play(song);
+       }
+    };
 
     /**
     * @function SongPlayer.previous (public method of the SongPlayer service)
@@ -208,7 +225,8 @@
       }
 
     };
-    
+
+
     return SongPlayer;
   }
  
