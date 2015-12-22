@@ -1,5 +1,5 @@
 (function() {
-  function SongPlayer(Fixtures) {
+  function SongPlayer($rootScope, Fixtures) {
     var SongPlayer = {};
 
     /**
@@ -30,13 +30,34 @@
       }
       
     }
- 
+    
     currentBuzzObject = new buzz.sound(song.audioUrl, {
       formats: ['mp3'],
       preload: true
     });
+
+    currentBuzzObject.setVolume(SongPlayer.volume);
+    
+    /**
+    * @desc Buzz object time updateswhen the seek bar is dragged
+    */
+    currentBuzzObject.bind('timeupdate', function() {
+      $rootScope.$apply(function() {
+        SongPlayer.currentTime = currentBuzzObject.getTime();
+      });
+    });
+
+    /**
+    * @desc Buzz object volume updates when the seek bar is dragged
+    */
+    currentBuzzObject.bind('volumechange', function() {
+      $rootScope.$apply(function() {
+        SongPlayer.volume = currentBuzzObject.getVolume();
+      });
+    });
  
-      SongPlayer.currentSong = song;
+    SongPlayer.currentSong = song;
+
     };
     
 
@@ -84,6 +105,18 @@
     * @type {Object}
     */
     SongPlayer.currentAlbum = null;
+
+    /**
+    * @desc Current playback time (in seconds) of currently playing song
+    * @type {Number}
+    */
+    SongPlayer.currentTime = null;
+
+    /**
+    * @desc The volume of the song player
+    * @type {Number}
+    */
+    SongPlayer.volume = null;
     
     /**
     * @function SongPlayer.play (public method of the SongPlayer service)
@@ -92,11 +125,9 @@
     */
     SongPlayer.play = function(song) {
       song = song || SongPlayer.currentSong;
-      if (SongPlayer.currentSong !== song) {
-       
-      setSong(song);
-      playSong(song);
-
+      if (SongPlayer.currentSong !== song) { 
+        setSong(song);
+        playSong(song);
       }
       else if (SongPlayer.currentSong === song) {
         if (currentBuzzObject.isPaused()) {
@@ -104,6 +135,28 @@
         }
       }         
 
+    };
+
+     /**
+     * @function setCurrentTime
+     * @desc Set current time (in seconds) of currently playing song
+     * @param {Number} time
+     */
+    SongPlayer.setCurrentTime = function(time) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setTime(time);
+      }
+    };
+
+     /**
+     * @function setVolume
+     * @desc Set volume of the song player
+     * @param {Number} volume
+     */
+    SongPlayer.setVolume = function(volume) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(volume)
+      }
     };
 
     /**
@@ -160,5 +213,5 @@
  
     angular
       .module('blocJams')
-      .factory('SongPlayer', SongPlayer);
+      .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer]);
 })();
