@@ -1,6 +1,7 @@
 (function() {
   function SongPlayer($rootScope, Fixtures) {
-    var SongPlayer = {};
+     
+     var SongPlayer = {};
 
     /**
     * @desc Current album object retrieved from fixtures
@@ -36,7 +37,7 @@
       preload: true
     });
 
-    currentBuzzObject.setVolume(SongPlayer.volume);
+    currentBuzzObject.setVolume(50);
     
     /**
     * @desc Buzz object time updateswhen the seek bar is dragged
@@ -79,7 +80,8 @@
     */
     var stopSong = function(song) {
       currentBuzzObject.pause();
-      song.playing = null;
+      currentBuzzObject.setTime(null);
+      song.playing = false;
       SongPlayer.currentAlbum = null;
       SongPlayer.currentSong = null;
     };
@@ -132,6 +134,7 @@
       else if (SongPlayer.currentSong === song) {
         if (currentBuzzObject.isPaused()) {
           currentBuzzObject.play();
+          song.playing = true;
         }
       }         
 
@@ -169,6 +172,21 @@
       currentBuzzObject.pause(); // Pauses song, doesn't stop it
       song.playing = false;
     }; 
+    
+    /**
+    * @function SongPlayer.playOrPause (public method of the SongPlayer service)
+    * @desc Will either play or pause depending on whether the song is playing (helps with buttons)
+    * @param {Object} song
+    */
+    SongPlayer.playOrPause = function(song) {
+       
+       if (song.playing){
+         SongPlayer.pause(song);
+       }
+       else{
+         SongPlayer.play(song);
+       }
+    };
 
     /**
     * @function SongPlayer.previous (public method of the SongPlayer service)
@@ -207,7 +225,8 @@
       }
 
     };
-    
+
+
     return SongPlayer;
   }
  
