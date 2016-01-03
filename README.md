@@ -1,7 +1,7 @@
 ## Bloc Jams using AngularJS
 
 This is a music player app that works with your personal music library.
-The Angular Bloc Jams app can be viewed at [here](https://intense-lake-3605.herokuapp.com).
+The Angular Bloc Jams app can be viewed at [here](https://chucku-bloc-jams-angular.herokuapp.com/).
 The following information tells users how they can contribute to the app or just test out their own ideas.
 
 ## Configuration
